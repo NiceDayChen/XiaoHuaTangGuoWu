@@ -36,9 +36,6 @@ python -m http.server 8000
 
 ## 项目结构
 
-- [index.html](C:\Users\闻秋芝\Documents\New project 2\index.html)：界面结构
-- [styles.css](C:\Users\闻秋芝\Documents\New project 2\styles.css)：儿童可爱风视觉样式
-- [script.js](C:\Users\闻秋芝\Documents\New project 2\script.js)：画布、图层和工具逻辑
 
 ## 当前版本说明
 
