@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>小画糖果屋</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar panel">
+        <div class="topbar-controls">
+          <div class="toolbar-group">
+            <span class="group-tag" data-i18n="toolbar.fileGroup">文件管理</span>
+            <label class="primary-button compact-button">
+              <span data-i18n="toolbar.openFile">打开文件</span>
+              <input
+                id="fileInput"
+                type="file"
+                accept=".jpg,.jpeg,.png,.bmp,image/jpeg,image/png,image/bmp"
+                hidden
+              />
+            </label>
+            <button id="saveBtn" class="soft-button" data-i18n="toolbar.saveFile">保存文件</button>
+          </div>
+
+          <div class="toolbar-separator" aria-hidden="true"></div>
+
+          <div class="toolbar-group">
+            <span class="group-tag" data-i18n="toolbar.rotateScaleGroup">旋转和缩放</span>
+            <button id="rotateBtn" class="soft-button" data-i18n="toolbar.rotate90">旋转 90°</button>
+            <label class="inline-field" for="scalePreset">
+              <span data-i18n="toolbar.scale">缩放</span>
+            </label>
+            <select id="scalePreset" class="toolbar-select">
+              <option value="fit" selected data-i18n="toolbar.scaleFit">自适应</option>
+              <option value="50">50%</option>
+              <option value="100">100%</option>
+              <option value="200">200%</option>
+            </select>
+          </div>
+
+          <div class="toolbar-separator" aria-hidden="true"></div>
+
+          <div class="toolbar-group">
+            <span class="group-tag" data-i18n="toolbar.layerGroup">图层管理</span>
+            <button id="toggleLayersBtn" class="soft-button layer-toggle">图层管理</button>
+          </div>
+
+          <div class="toolbar-separator" aria-hidden="true"></div>
+
+          <div class="toolbar-group">
+            <span class="group-tag" data-i18n="toolbar.languageGroup">语言切换</span>
+            <label class="inline-field" for="languageSelect">
+              <span data-i18n="toolbar.language">语言</span>
+            </label>
+            <select id="languageSelect" class="toolbar-select">
+              <option value="zh-CN" data-i18n="toolbar.languageZh">中文</option>
+              <option value="en" data-i18n="toolbar.languageEn">English</option>
+            </select>
+          </div>
+        </div>
+      </header>
+
+      <section class="content-grid">
+        <aside class="tool-sidebar panel">
+          <div class="sidebar-head compact-head">
+            <span id="toolName" class="pill">当前模式：浏览</span>
+          </div>
+
+          <div class="quick-tool-grid">
+            <button class="quick-action" data-panel="tone" type="button">
+              <span class="quick-icon">◐</span>
+              <span class="quick-label" data-i18n="quick.tone">亮度</span>
+            </button>
+            <button class="quick-action" data-panel="color" type="button">
+              <span class="quick-icon">◎</span>
+              <span class="quick-label" data-i18n="quick.color">色相</span>
+            </button>
+            <button class="quick-action" data-panel="crop" type="button">
+              <span class="quick-icon">✂</span>
+              <span class="quick-label" data-i18n="quick.crop">裁剪</span>
+            </button>
+            <button class="quick-action" data-panel="draw" type="button">
+              <span class="quick-icon">／</span>
+              <span class="quick-label" data-i18n="quick.draw">绘制</span>
+            </button>
+            <button class="quick-action" data-panel="mosaic" type="button">
+              <span class="quick-icon">▦</span>
+              <span class="quick-label" data-i18n="quick.mosaic">马赛克</span>
+            </button>
+            <button class="quick-action" data-panel="text" type="button">
+              <span class="quick-icon">T</span>
+              <span class="quick-label" data-i18n="quick.text">文字</span>
+            </button>
+          </div>
+
+          <div class="tool-detail-wrap">
+            <section class="tool-detail active" data-panel="home">
+              <h3 data-i18n="home.title">快速说明</h3>
+              <p data-i18n="home.line1">先打开图片，再点左侧图标切换功能。</p>
+              <p data-i18n="home.line2">需要局部修改时，可以先点上方“图层管理”复制图层。</p>
+              <p data-i18n="home.line3">右侧是主操作区，拖动、点击、框选都在那边完成。</p>
+            </section>
+
+            <section class="tool-detail" data-panel="tone">
+              <h3 data-i18n="tone.title">亮度与对比度</h3>
+              <p class="detail-tip" data-i18n="tone.tip">只作用于当前选中的图层。</p>
+              <div class="field-group">
+                <label for="brightnessRange"><span data-i18n="tone.brightness">亮度</span> <span id="brightnessValue">100%</span></label>
+                <input id="brightnessRange" type="range" min="0" max="200" value="100" />
+              </div>
+              <div class="field-group no-gap">
+                <label for="contrastRange"><span data-i18n="tone.contrast">对比度</span> <span id="contrastValue">100%</span></label>
+                <input id="contrastRange" type="range" min="0" max="200" value="100" />
+              </div>
+              <button id="resetToneBtn" class="soft-button utility-button" type="button" data-i18n="tone.reset">重置亮度对比度</button>
+            </section>
+
+            <section class="tool-detail" data-panel="color">
+              <h3 data-i18n="color.title">色相与饱和度</h3>
+              <p class="detail-tip" data-i18n="color.tip">适合让图片颜色更鲜艳或更柔和。</p>
+              <div class="field-group">
+                <label for="hueRange"><span data-i18n="color.hue">色相</span> <span id="hueValue">0°</span></label>
+                <input id="hueRange" type="range" min="-180" max="180" value="0" />
+              </div>
+              <div class="field-group no-gap">
+                <label for="saturationRange"><span data-i18n="color.saturation">饱和度</span> <span id="saturationValue">100%</span></label>
+                <input id="saturationRange" type="range" min="0" max="200" value="100" />
+              </div>
+              <button id="resetColorBtn" class="soft-button utility-button" type="button" data-i18n="color.reset">重置色相饱和度</button>
+            </section>
+
+            <section class="tool-detail" data-panel="crop">
+              <h3 data-i18n="crop.title">裁剪图片</h3>
+              <p data-i18n="crop.tip">切换到裁剪后，在右侧图片上拖出一个矩形区域，松手就会完成裁剪。</p>
+            </section>
+
+            <section class="tool-detail" data-panel="draw">
+              <h3 data-i18n="draw.title">绘制线条</h3>
+              <div class="mode-switch">
+                <button class="mode-button" data-draw-mode="brush" type="button" data-i18n="draw.brush">涂鸦</button>
+                <button class="mode-button" data-draw-mode="line" type="button" data-i18n="draw.line">直线</button>
+                <button class="mode-button" data-draw-mode="curve" type="button" data-i18n="draw.curve">曲线</button>
+              </div>
+              <div class="field-group">
+                <label for="drawColor" data-i18n="draw.color">线条颜色</label>
+                <input id="drawColor" type="color" value="#ff6f91" />
+              </div>
+              <div class="field-group no-gap">
+                <label for="brushSize"><span data-i18n="draw.size">线条粗细</span> <span id="brushSizeValue">8px</span></label>
+                <input id="brushSize" type="range" min="1" max="60" value="8" />
+              </div>
+            </section>
+
+            <section class="tool-detail" data-panel="mosaic">
+              <h3 data-i18n="mosaic.title">矩形马赛克</h3>
+              <p class="detail-tip" data-i18n="mosaic.tip">在右侧框选区域后，会自动打上马赛克。</p>
+              <div class="field-group no-gap">
+                <label for="mosaicSize"><span data-i18n="mosaic.size">颗粒大小</span> <span id="mosaicSizeValue">16px</span></label>
+                <input id="mosaicSize" type="range" min="4" max="40" value="16" />
+              </div>
+            </section>
+
+            <section class="tool-detail" data-panel="text">
+              <h3 data-i18n="text.title">添加文字</h3>
+              <p class="detail-tip" data-i18n="text.tip">输入内容后，到右侧图片上点一下就能放字。</p>
+              <div class="field-group">
+                <label for="textColor" data-i18n="text.color">文字颜色</label>
+                <input id="textColor" type="color" value="#ff6f91" />
+              </div>
+              <div class="field-group">
+                <label for="textValue" data-i18n="text.input">输入文字</label>
+                <textarea
+                  id="textValue"
+                  rows="3"
+                  data-i18n-placeholder="text.placeholder"
+                  placeholder="输入文字后，到右侧图片上点击放置"
+                ></textarea>
+              </div>
+              <div class="inline-fields">
+                <div class="field-group small-field">
+                  <label for="fontSize" data-i18n="text.fontSize">字号</label>
+                  <input id="fontSize" type="number" min="12" max="120" value="32" />
+                </div>
+                <div class="field-group flex-field">
+                  <label for="fontFamily" data-i18n="text.fontFamily">字体</label>
+                  <select id="fontFamily">
+                    <option value="'Comic Sans MS', 'Trebuchet MS', cursive" data-i18n="text.fontCute">圆润可爱</option>
+                    <option value="'Segoe Print', 'Trebuchet MS', cursive" data-i18n="text.fontHand">手写感</option>
+                    <option value="'Microsoft YaHei', 'Trebuchet MS', sans-serif" data-i18n="text.fontClean">清爽简洁</option>
+                  </select>
+                </div>
+              </div>
+            </section>
+          </div>
+        </aside>
+
+        <main class="workspace panel">
+          <section class="canvas-area">
+            <div class="canvas-stage" id="canvasStage">
+              <canvas id="editorCanvas" width="960" height="640"></canvas>
+              <canvas id="overlayCanvas" width="960" height="640"></canvas>
+            </div>
+          </section>
+
+          <aside id="layerPopup" class="layer-popup" hidden>
+            <div class="layer-popup-head">
+              <div>
+                <h3 data-i18n="layerPopup.title">图层管理</h3>
+                <p data-i18n="layerPopup.tip">先选中图层，再去右侧进行图片处理。</p>
+              </div>
+              <button id="closeLayersBtn" class="close-button" type="button">×</button>
+            </div>
+            <div class="layer-popup-actions">
+              <button id="addLayerBtn" class="soft-button utility-button" type="button" data-i18n="layerPopup.duplicate">复制图层</button>
+            </div>
+            <div id="layersList" class="layers-list"></div>
+          </aside>
+        </main>
+      </section>
+
+      <p id="statusText" hidden>先打开一张图片开始吧。</p>
+    </div>
+
+    <template id="layerItemTemplate">
+      <div class="layer-item">
+        <button class="layer-main" type="button"></button>
+        <div class="layer-actions">
+          <button class="mini-button visibility-button" type="button">显示</button>
+          <button class="mini-button delete-button" type="button">删除</button>
+        </div>
+      </div>
+    </template>
+
+    <script src="script.js"></script>
+  </body>
+</html>
