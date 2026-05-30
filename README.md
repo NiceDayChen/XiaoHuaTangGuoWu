@@ -4,7 +4,7 @@
 
 ## 如何打开
 
-直接双击 [index.html](C:\Users\闻秋芝\Documents\New project 2\index.html) 即可使用。
+直接双击 [index.html]即可使用。
 
 如果浏览器限制本地文件访问，也可以在当前目录启动一个简易静态服务后再访问：
 
